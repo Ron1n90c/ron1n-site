@@ -1,0 +1,435 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="Ronin: tank macros for GSE. Retail and WoW: Forever.">
+<title>Ronin Macros</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout concept: the player's own artwork fixed behind everything; a hero that lets the art breathe,
+   then dark glass panels per product (Retail / Forever), switched by the hash. */
+/* Light: warm lavender paper, soft teal and amber accents. Dark: deep indigo, gentle mint and gold. */
+:root{
+  --bg:#f5f3fa; --fg:#201c33; --mute:#625d7c; --lede:#443f5d;
+  --panel:rgba(255,255,255,.66); --soft:rgba(60,45,120,.055); --soft-2:rgba(255,255,255,.7);
+  --line:rgba(70,50,140,.15); --code:#13111f; --code-fg:#cdf7d8;
+  --violet:#6d4ad8; --magenta:#c0398f;
+  --retail:#0f9a6a; --forever:#b4741a; --on-accent:#ffffff;
+  --accent:var(--retail); --accent-2:var(--violet);
+  --nav:rgba(245,243,250,.55); --glow-a:rgba(109,74,216,.13); --glow-b:rgba(15,154,106,.11);
+  --f-head:"Chakra Petch","Segoe UI",system-ui,sans-serif;
+  --f-body:"Inter","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e0c18; --fg:#ece9f6; --mute:#a9a4c2; --lede:#cdc8e4;
+  --panel:rgba(26,22,44,.55); --soft:rgba(255,255,255,.045); --soft-2:var(--soft);
+  --line:rgba(190,170,255,.15); --code:#08070f; --code-fg:#d4ffdd;
+  --violet:#9a7cf6; --magenta:#f06cc6; --retail:#62dc8c; --forever:#f0bb5c; --on-accent:#0e0c18;
+  --nav:rgba(14,12,24,.5); --glow-a:rgba(139,92,246,.2); --glow-b:rgba(98,220,140,.12);
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e0c18; --fg:#ece9f6; --mute:#a9a4c2; --lede:#cdc8e4;
+  --panel:rgba(26,22,44,.55); --soft:rgba(255,255,255,.045); --soft-2:var(--soft);
+  --line:rgba(190,170,255,.15); --code:#08070f; --code-fg:#d4ffdd;
+  --violet:#9a7cf6; --magenta:#f06cc6; --retail:#62dc8c; --forever:#f0bb5c; --on-accent:#0e0c18;
+  --nav:rgba(14,12,24,.5); --glow-a:rgba(139,92,246,.2); --glow-b:rgba(98,220,140,.12);
+  color-scheme:dark}
+body{--accent:var(--retail)}
+body[data-product="forever"]{--accent:var(--forever);--accent-2:var(--magenta)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 var(--f-body);
+  padding-block:0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(60vw 50vh at 12% 4%,var(--glow-a),transparent 70%),radial-gradient(55vw 45vh at 92% 18%,var(--glow-b),transparent 70%)}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-head);line-height:1.08;margin:0;text-wrap:balance;letter-spacing:.01em}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.mute{color:var(--mute)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+/* nav */
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;margin:0 calc(-1*max(16px,env(safe-area-inset-left,0px)));
+  padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));
+  background:var(--nav);backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:space-between}
+.logo{font:700 20px/1 var(--f-head);letter-spacing:.14em;text-decoration:none}
+.logo small{font:500 12px/1 var(--f-body);letter-spacing:0;color:var(--mute);margin-left:8px}
+.switch{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--soft)}
+.switch a{padding:7px 18px;border-radius:999px;text-decoration:none;font:600 14px/1 var(--f-head);letter-spacing:.06em;color:var(--mute)}
+.switch a[aria-current="true"]{background:var(--accent);color:var(--on-accent)}
+.links{display:flex;gap:18px;font-size:14px}
+.links a{text-decoration:none;color:var(--mute)}
+.links a:hover{color:var(--fg)}
+@media(max-width:720px){.links{display:none}}
+.tools{display:flex;align-items:center;gap:14px}
+.theme{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--soft);color:var(--fg);cursor:pointer;font-size:16px;line-height:1;display:grid;place-items:center}
+.theme:hover{border-color:var(--accent)}
+.kofi{text-align:center;display:grid;justify-items:center;gap:12px}
+.kofi h2{margin:0}
+.kofi p{max-width:56ch;margin:0;color:var(--lede)}
+.kofi .url{font:500 14px/1.4 var(--f-mono);color:var(--mute);word-break:break-all}
+
+/* hero */
+.hero{min-height:min(64vh,560px);display:flex;align-items:flex-end;padding-block:64px 40px}
+.hero .wrap{width:100%}
+.kanji{font:500 13px/1 var(--f-mono);letter-spacing:.3em;color:var(--magenta);margin-bottom:18px;display:block}
+.hero h1{font-size:clamp(46px,9vw,104px);font-weight:700;letter-spacing:.02em;}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{max-width:560px;font-size:18px;margin:18px 0 28px;color:var(--lede);}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:10px;font:600 15px/1 var(--f-head);letter-spacing:.05em;text-decoration:none;border:1px solid var(--line);background:var(--soft-2);color:var(--fg);cursor:pointer}
+.btn.primary{background:var(--accent);color:var(--on-accent);border-color:transparent}
+.btn:hover{filter:brightness(1.12)}
+.upd{font:500 12px/1.4 var(--f-mono);letter-spacing:.08em;color:var(--mute);margin:18px 0 0;}
+.upd b{color:var(--accent);font-weight:500}
+.stats{display:flex;gap:28px;flex-wrap:wrap;margin-top:34px;font-size:13px;color:var(--mute)}
+.stats b{display:block;font:700 26px/1.1 var(--f-head);color:var(--fg)}
+
+/* panels */
+main{display:grid;gap:28px;padding-bottom:56px;grid-template-columns:minmax(0,1fr)}
+.view{display:grid;gap:28px;min-width:0}
+.panel{background:var(--panel);box-shadow:0 1px 0 var(--line) inset;border:1px solid var(--line);border-radius:18px;padding:clamp(20px,4vw,40px);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.panel>h2{font-size:clamp(28px,4.4vw,44px);margin:10px 0 12px}
+.panel>.lede{max-width:68ch;color:var(--lede);margin:0 0 26px}
+.view[hidden]{display:none!important}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(min(250px,100%),1fr))}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0}
+.card h3{font-size:20px;margin-bottom:4px}
+.card .role{font:500 11px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;display:block}
+.card ul{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.card li{font-size:12.5px;padding:4px 9px;border-radius:999px;border:1px solid var(--line);color:var(--mute);background:var(--soft)}
+.card p{margin:6px 0 0;font-size:14px;color:var(--mute)}
+.two{display:grid;gap:22px;grid-template-columns:1fr 1fr}
+@media(max-width:820px){.two{grid-template-columns:1fr}}
+.two>*{min-width:0}
+
+/* weights */
+.bars{display:grid;gap:8px;margin:14px 0 0}
+.bar{display:grid;grid-template-columns:64px 1fr 48px;gap:10px;align-items:center;font:500 12px/1 var(--f-mono);color:var(--mute)}
+.bar i{display:block;height:12px;border-radius:6px;background:linear-gradient(90deg,var(--accent-2),var(--accent))}
+.chain{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px}
+.chain span{font:600 13px/1 var(--f-mono);padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:var(--soft)}
+.chain b{color:var(--accent)}
+
+/* table */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14px}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line)}
+th{font:600 12px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--soft)}
+tr:last-child td{border-bottom:0}
+kbd{font:500 12px/1 var(--f-mono);padding:4px 8px;border-radius:6px;border:1px solid var(--line);background:var(--soft)}
+
+/* code */
+.code{position:relative;background:var(--code);border:1px solid var(--line);border-radius:12px;padding:16px 74px 14px 16px;font:400 13px/1.6 var(--f-mono);color:var(--code-fg);overflow-x:auto;white-space:pre}
+.code .c{color:#7e7aa0}
+.copy{position:absolute;top:8px;right:8px;font:500 11px/1 var(--f-mono);padding:6px 10px;border-radius:6px;border:1px solid var(--line);background:var(--soft);color:var(--mute);cursor:pointer}
+.cap{font:500 12px/1.4 var(--f-mono);color:var(--mute);margin:0 0 8px}
+.dl{margin-top:18px;border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--soft);display:grid;gap:12px;justify-items:start}
+.dl-top{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:13px}
+.pill{font:600 12px/1 var(--f-mono);letter-spacing:.08em;padding:6px 10px;border-radius:999px;background:var(--accent);color:var(--on-accent)}
+.new{margin:0;padding-left:18px;font-size:14px;color:var(--lede)}
+.steps{counter-reset:s;display:grid;gap:12px;margin:0;padding:0;list-style:none}
+.steps li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;border:1px solid var(--accent);color:var(--accent);font:700 14px/1 var(--f-head)}
+details{border:1px solid var(--line);border-radius:12px;background:var(--soft);padding:0}
+details+details{margin-top:10px}
+summary{cursor:pointer;padding:14px 18px;font:600 16px/1.3 var(--f-head);list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";float:right;color:var(--accent)}
+details[open] summary::after{content:"–"}
+details p{margin:0;padding:0 18px 16px;color:var(--lede)}
+.out li{color:var(--mute)}
+.out{margin:0;padding-left:20px}
+.yes{color:var(--accent)}
+
+footer{padding:34px 0 48px;border-top:1px solid var(--line);background:var(--nav);margin:0 calc(-1*max(16px,env(safe-area-inset-left,0px)));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));font-size:14px;color:var(--mute)}
+footer .foot{display:grid;gap:24px;grid-template-columns:1fr 1.6fr}
+footer p{margin:6px 0 0}
+.flogo{font:700 18px/1 var(--f-head);letter-spacing:.14em;color:var(--fg)}
+.legal{font-size:12.5px}
+@media(max-width:820px){footer .foot{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+
+
+<nav>
+  <div class="wrap">
+    <a class="logo" href="#retail">RONIN<small>tank macros for GSE</small></a>
+    <div class="switch" role="tablist" aria-label="Game version">
+      <a href="#retail" id="t-retail" role="tab">Retail</a>
+      <a href="#forever" id="t-forever" role="tab">Forever</a>
+    </div>
+    <div class="tools"><div class="links"><a href="#how">How it works</a><a href="#keys">Modifiers</a><a href="#install">Install</a><a href="#faq">FAQ</a></div><button class="theme" id="theme" type="button" aria-label="Switch light or dark mode" title="Light / dark">◐</button></div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="kanji">侍魂 · SAMURAI SPIRIT</span>
+    <h1>One button.<br><em id="hero-em">Six tanks.</em></h1>
+    <p id="hero-p">Tank macros for GSE, made by a player who wants to hold the pull, not juggle twenty keybinds. Pick your game version, import in one command, press one key.</p>
+    <div class="cta">
+      <a class="btn primary" id="cta-get" href="#install">Get <span id="cta-name">Ronin Retail</span></a>
+      <a class="btn" href="#how">See how it works</a>
+    </div>
+    <p class="upd" id="hero-upd"></p>
+    <div class="stats" id="stats"></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ================= RETAIL ================= -->
+<section class="view" id="v-retail">
+  <div class="panel">
+    <span class="eyebrow">Ronin Retail · Midnight 12.0</span>
+    <h2>Every tank. Both hero talents.</h2>
+    <p class="lede">Six tank specs, twelve sequences. Each one is a real GSE Priority list of small steps (six, sometimes seven, with one to three spells each), so the button always has something sensible to press and active mitigation lands without you counting cooldowns.</p>
+    <div class="grid">
+      <div class="card"><span class="role">Tank</span><h3>Protection Paladin</h3><p>Filler: Blessed Hammer.</p><ul><li>Lightsmith</li><li>Templar</li></ul></div>
+      <div class="card"><span class="role">Tank</span><h3>Brewmaster Monk</h3><p>Filler: Tiger Palm. Extra “All In” version keeps Purifying and Celestial Brew.</p><ul><li>Master of Harmony</li><li>Shado-Pan</li></ul></div>
+      <div class="card"><span class="role">Tank</span><h3>Guardian Druid</h3><p>Moonfire runs as its own castsequence.</p><ul><li>Elune’s Chosen</li><li>Druid of the Claw</li></ul></div>
+      <div class="card"><span class="role">Tank</span><h3>Protection Warrior</h3><p>Filler: Revenge.</p><ul><li>Mountain Thane</li><li>Colossus</li></ul></div>
+      <div class="card"><span class="role">Tank</span><h3>Vengeance Demon Hunter</h3><p>Fel Devastation is protected, so it never gets interrupted.</p><ul><li>Aldrachi Reaver</li><li>Annihilator</li></ul></div>
+      <div class="card"><span class="role">Tank</span><h3>Blood Death Knight</h3><p>Castsequence style: Marrowrend into Heart Strike.</p><ul><li>Deathbringer</li><li>San’layn</li></ul></div>
+    </div>
+  </div>
+
+  <div class="panel" id="how-retail">
+    <span class="eyebrow">How it works</span>
+    <h2>Small steps, real priority.</h2>
+    <div class="two">
+      <div>
+        <p class="lede" style="margin:0">GSE’s Priority mode picks a step on every press, and earlier steps are picked more often. With six steps, step 1 gets 6/21 of the presses and step 6 gets 1/21. The important spells sit first, the rare ones last.</p>
+        <div class="bars" role="img" aria-label="Share of key presses per step, from 29 percent for step 1 down to 5 percent for step 6">
+          <div class="bar"><span>Step 1</span><i style="width:100%"></i><span>29%</span></div>
+          <div class="bar"><span>Step 2</span><i style="width:83%"></i><span>24%</span></div>
+          <div class="bar"><span>Step 3</span><i style="width:67%"></i><span>19%</span></div>
+          <div class="bar"><span>Step 4</span><i style="width:50%"></i><span>14%</span></div>
+          <div class="bar"><span>Step 5</span><i style="width:33%"></i><span>10%</span></div>
+          <div class="bar"><span>Step 6</span><i style="width:17%"></i><span>5%</span></div>
+        </div>
+      </div>
+      <div>
+        <p class="cap">Blood DK, one step (castsequence style)</p>
+        <div class="code" data-copy>/castsequence reset=4 Blood Boil, Death Strike
+<span class="c">-- resets after 4 s, so it can never get stuck</span></div>
+        <p class="mute" style="font-size:14px;margin:14px 0 0">Every step stays under GSE’s 255 character limit <em>after</em> compiling. A talent you don’t have is skipped.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOREVER ================= -->
+<section class="view" id="v-forever" hidden>
+  <div class="panel">
+    <span class="eyebrow">Ronin Forever · WoW: Forever</span>
+    <h2>Classic rules. Same one button.</h2>
+    <p class="lede">WoW: Forever launched on 4 November 2026. Three tanks, each with the same three versions: Leveling 1-20, Leveling 20-40 and 60. Choose the version in GSE and let the macro cycle your spells in order.</p>
+    <div class="grid">
+      <div class="card"><span class="role">Tank</span><h3>Protection Paladin</h3><p>Seal of Fury and Judgement as one castsequence, then Holy Strike, Exorcism, Consecration, Holy Shield, Hammer of the Righteous. You keep Righteous Fury.</p><ul><li>Leveling 1-20</li><li>Leveling 20-40</li><li>60</li></ul></div>
+      <div class="card"><span class="role">Tank</span><h3>Protection Warrior</h3><p>Defensive Stance, Shield Slam, Revenge, Sunder Armor, Shield Block, and a shouts castsequence with Thunder Clap, Demoralizing Shout and Battle Shout.</p><ul><li>Leveling 1-20</li><li>Leveling 20-40</li><li>60</li></ul></div>
+      <div class="card"><span class="role">Tank</span><h3>Feral Druid (Bear)</h3><p>Every step makes sure you are in Bear Form first (Dire Bear Form from level 40), then Primal Bite, Lacerate, Swipe, Maul, Faerie Fire, Demoralizing Roar and Enrage.</p><ul><li>Leveling 1-20</li><li>Leveling 20-40</li><li>60</li></ul></div>
+    </div>
+  </div>
+
+  <div class="panel" id="how-forever">
+    <span class="eyebrow">How it works</span>
+    <h2>Sequential, short, no ranks.</h2>
+    <div class="two">
+      <div>
+        <p class="lede" style="margin:0">Forever macros run as sequential steps: each press fires the next one and the list loops. Spells are written by name, never by rank or spell ID, so learning a new rank doesn’t break the macro. Spells you haven’t learned yet are skipped.</p>
+        <div class="chain" role="img" aria-label="Six steps in a loop"><span>1</span><b>→</b><span>2</span><b>→</b><span>3</span><b>→</b><span>4</span><b>→</b><span>5</span><b>→</b><span>6</span><b>↺</b></div>
+        <p class="mute" style="font-size:14px;margin:14px 0 0">Forever’s macro engine has no buff or debuff conditions, so refreshes use timed castsequences instead.</p>
+      </div>
+      <div>
+        <p class="cap">Protection Paladin, step 1</p>
+        <div class="code" data-copy>/targetenemy [noexists][dead]
+/cast [mod:shift,@player]Flash of Light;[mod:alt]Hammer of Justice;[mod:ctrl]Rebuke
+/castsequence reset=combat/2 Seal of Fury, Judgement, Judgement, Judgement
+/startattack</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SHARED ================= -->
+<div class="panel" id="how">
+  <span class="eyebrow">Rules of the house</span>
+  <h2>Built to tank, not to play for you.</h2>
+  <div class="two">
+    <div>
+      <h3 style="font-size:18px;margin-bottom:8px" class="yes">In the macro</h3>
+      <ul class="out" style="color:var(--fg)">
+        <li style="color:var(--fg)">Your threat and damage rotation, with active mitigation where it belongs</li>
+        <li style="color:var(--fg)">Heal and CC on modifier keys</li>
+        <li style="color:var(--fg)">Smart refreshes with castsequence timers</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="font-size:18px;margin-bottom:8px;color:var(--mute)">Left out on purpose</h3>
+      <ul class="out">
+        <li>Big defensives. You press those, because you know when you need them.</li>
+        <li>Trinkets and any DPS rotation.</li>
+        <li>Anything that needs rage, health or stagger readouts. Macros can’t read them.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="panel" id="keys">
+  <span class="eyebrow">Modifiers</span>
+  <h2>Hold a key, change the job.</h2>
+  <div class="tbl" id="keys-retail">
+    <table><thead><tr><th>Spec</th><th><kbd>Shift</kbd> heal</th><th><kbd>Alt</kbd> CC</th></tr></thead><tbody>
+      <tr><td>Protection Paladin</td><td>Word of Glory (self)</td><td>Hammer of Justice</td></tr>
+      <tr><td>Brewmaster Monk</td><td>Expel Harm (self)</td><td>Leg Sweep</td></tr>
+      <tr><td>Guardian Druid</td><td>Frenzied Regeneration</td><td>Mighty Bash</td></tr>
+      <tr><td>Protection Warrior</td><td>Impending Victory</td><td>Shockwave</td></tr>
+      <tr><td>Vengeance Demon Hunter</td><td>Soul Cleave</td><td>Chaos Nova</td></tr>
+      <tr><td>Blood Death Knight</td><td>Death Strike</td><td>Asphyxiate</td></tr>
+    </tbody></table>
+  </div>
+  <div class="tbl" id="keys-forever" hidden>
+    <table><thead><tr><th>Key</th><th>Does</th><th>Paladin</th><th>Warrior</th><th>Druid</th></tr></thead><tbody>
+      <tr><td><kbd>Shift</kbd></td><td>Heal</td><td>Flash of Light / Holy Light</td><td>Victory Rush</td><td>Frenzied Regeneration</td></tr>
+      <tr><td><kbd>Alt</kbd></td><td>CC (stun)</td><td>Hammer of Justice</td><td>Concussion Blow</td><td>Bash</td></tr>
+      <tr><td><kbd>Ctrl</kbd></td><td>Interrupt</td><td>Rebuke</td><td>Shield Bash</td><td>Feral Charge</td></tr>
+    </tbody></table>
+  </div>
+  <p class="mute" style="font-size:14px;margin:12px 0 0" id="keys-note">Interrupts and the rest of your utility stay on your own keybinds in Retail.</p>
+</div>
+
+<div class="panel" id="install">
+  <span class="eyebrow">Install</span>
+  <h2>Three steps, one command.</h2>
+  <div class="two">
+    <ol class="steps">
+      <li><div><b>Copy the addon folder</b><br><span class="mute">Put <span id="folder">RoninInstaller</span> into your AddOns folder and make sure GSE is enabled.</span></div></li>
+      <li><div><b>Import</b><br><span class="mute">Log in, type the command, tick the classes you want and click Import Selected.</span></div></li>
+      <li><div><b>Put the macro on your bar</b><br><span class="mute">Drag the GSE macro to your action bar and bind it. After every GSE update, place it on the bar again.</span></div></li>
+    </ol>
+    <div>
+      <p class="cap">Type this in game</p>
+      <div class="code" data-copy>/ronin</div>
+      <div class="dl">
+        <div class="dl-top"><span class="pill" id="dl-ver"></span><span class="mute" id="dl-date"></span></div>
+        <a class="btn primary" id="dl-btn" href="#install" download>Download <span id="dl-name">Ronin Retail</span></a>
+        <ul class="new" id="dl-new"></ul>
+        <p class="mute" id="dl-note" style="font-size:13px;margin:8px 0 0" hidden></p>
+      </div>
+  </div>
+  </div>
+</div>
+
+<div class="panel" id="faq">
+  <span class="eyebrow">FAQ</span>
+  <h2>Quick answers.</h2>
+  <details><summary>Nothing casts after a GSE update.</summary><p>A GSE update unbinds the macro from the action bar. Drag it onto the bar again and bind it. The sequences themselves are not affected.</p></details>
+  <details><summary>Does it play the game for me?</summary><p>No. It presses the next sensible spell on every key press. You still position, taunt, use cooldowns and call the pull.</p></details>
+  <details><summary>My game isn’t in English.</summary><p>Spell names are translated and can become longer. Check the character counter in the GSE editor: every step has to stay under 255 characters.</p></details>
+  <details><summary>Why are the big defensives missing?</summary><p>Because timing them is the tank’s job. A macro that burns Shield Wall on cooldown is worse than no macro.</p></details>
+  <details><summary>A spell is in the wrong order.</summary><p>Tell me which class and level you play and what feels off. The sequences are small on purpose, so changes are quick.</p></details>
+</div>
+
+<div class="panel kofi" id="support">
+  <span class="eyebrow">Support</span>
+  <h2>☕ Like the macros?</h2>
+  <p>If my sequences help you out and you’d like to support ongoing updates, you can buy me a coffee here:</p>
+  <a class="btn primary" href="https://ko-fi.com/ron1n90c" target="_blank" rel="noopener">❤️ Buy me a coffee on Ko-fi</a>
+  <span class="url">https://ko-fi.com/ron1n90c</span>
+</div>
+
+</main>
+
+<footer><div class="wrap foot">
+  <div>
+    <b class="flogo">RONIN</b>
+    <p>Tank macros for GSE (Gnome Sequencer Enhanced). Made by a tank, for tanks who would rather play than click.</p>
+  </div>
+  <div class="legal">
+    <p>© 2026 Ronin. All rights reserved. The macros are free to use and share with credit. Please do not resell them.</p>
+    <p>World of Warcraft® and Blizzard Entertainment® are trademarks or registered trademarks of Blizzard Entertainment, Inc. Ronin is not affiliated with or endorsed by Blizzard Entertainment. GSE is a separate addon by its own authors.</p>
+  </div>
+</div></footer>
+
+<script>
+// Updated by the build script every time a new version is released.
+var DATA = {
+  retail:  { name:"Ronin Retail",  em:"Six tanks.", folder:"RoninInstaller", version:"V5.0.3", updated:"10 November 2026",
+    file:"RoninRetail_V5.0.3.zip", href:"downloads/RoninRetail.zip",
+    notes:["Blood DK: Death and Decay and Reaper’s Mark cast without the combat condition","README rewritten for the current version"],
+    p:"Tank macros for GSE, made by a player who wants to hold the pull, not juggle twenty keybinds. Six tank specs, twelve sequences, one key.",
+    stats:[["6","tank specs"],["12","sequences"],["255","character limit respected"]] },
+  forever: { name:"Ronin Forever", em:"Classic rules.", folder:"RoninForever", version:"V1.5.0", updated:"9 November 2026",
+    file:"RoninForever_V1.5.0.zip", href:"downloads/RoninForever.zip",
+    notes:["All three classes rebuilt: Leveling 1-20, Leveling 20-40 and 60","Plain spell names, no ranks, so new ranks don’t break the macro","Druid makes sure you are in Bear Form on every step"],
+    p:"The same one-key idea for WoW: Forever. Protection Paladin, Protection Warrior and Feral Druid, each with Leveling 1-20, Leveling 20-40 and 60 versions.",
+    stats:[["3","tank classes"],["9","versions"],["3","modifier keys"]] }
+};
+function $(id){return document.getElementById(id)}
+function show(){
+  var h=(location.hash||"").replace("#","");
+  var p = h==="forever" ? "forever" : "retail";
+  document.body.setAttribute("data-product",p);
+  var d=DATA[p];
+  $("v-retail").hidden = p!=="retail"; $("v-forever").hidden = p!=="forever";
+  $("keys-retail").hidden = p!=="retail"; $("keys-forever").hidden = p!=="forever";
+  $("t-retail").setAttribute("aria-current", p==="retail"); $("t-forever").setAttribute("aria-current", p==="forever");
+  $("hero-em").textContent=d.em; $("hero-p").textContent=d.p;
+  $("cta-name").textContent=d.name; $("dl-name").textContent=d.name; $("folder").textContent=d.folder;
+  $("keys-note").textContent = p==="retail" ? "Interrupts and the rest of your utility stay on your own keybinds in Retail." : "Big defensives stay on your own keybinds in Forever too.";
+  $("stats").innerHTML = d.stats.map(function(s){return "<div><b>"+s[0]+"</b>"+s[1]+"</div>"}).join("");
+  $("dl-ver").textContent=d.version; $("dl-date").textContent="Updated "+d.updated;
+  $("hero-upd").innerHTML="<b>"+d.version+"</b> · Updated "+d.updated;
+  $("dl-new").innerHTML=d.notes.map(function(n){return "<li>"+n+"</li>"}).join("");
+  var btn=$("dl-btn"); btn.href=d.href; btn.setAttribute("download",d.file); $("cta-get").href="#install";
+  document.title="Ronin Macros";
+}
+
+// Inside Claude the zip is embedded in the page and saved through the downloads capability.
+// On a normal website (no window.claude / no embedded ZIPS) the button is a plain link to downloads/*.zip.
+document.addEventListener("click",function(e){
+  var a=e.target.closest&&e.target.closest("#dl-btn"); if(!a||!window.ZIPS||!window.claude)return;
+  var p=document.body.getAttribute("data-product"); var d=DATA[p]; if(!ZIPS[p])return;
+  e.preventDefault();
+  var note=$("dl-note");
+  window.claude.use("downloads").then(function(dl){
+    if(!dl){note.hidden=false;note.textContent="Downloads are not available in this view. Open the page in a normal browser tab.";return}
+    var bin=atob(ZIPS[p]),u=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);
+    return dl.save({filename:d.file,data:u}).then(function(){note.hidden=false;note.textContent="Saved "+d.file},function(err){
+      note.hidden=false;note.textContent=(err&&err.code==="declined")?"Download cancelled.":"The download could not start in this view."});
+  }).catch(function(){note.hidden=false;note.textContent="The download could not start in this view."});
+},true);
+window.addEventListener("hashchange",function(){
+  var h=location.hash.replace("#","");
+  if(h==="retail"||h==="forever"){show();window.scrollTo({top:0})}
+});
+// install/how/keys/faq anchors are in-page: keep the current product when they are used
+document.addEventListener("click",function(e){
+  var a=e.target.closest&&e.target.closest("a[href^='#']"); if(!a)return;
+  var t=a.getAttribute("href").slice(1);
+  if(t&&t!=="retail"&&t!=="forever"){e.preventDefault();var el=$(t);if(el)el.scrollIntoView({behavior:"smooth",block:"start"})}
+});
+// copy buttons
+document.querySelectorAll(".code[data-copy]").forEach(function(box){
+  var text=box.textContent.replace(/\n?-- .*$/m,"").trim();
+  var b=document.createElement("button");b.className="copy";b.type="button";b.textContent="Copy";
+  b.addEventListener("click",function(){
+    function ok(){b.textContent="Copied";setTimeout(function(){b.textContent="Copy"},1400)}
+    function sel(){var r=document.createRange();r.selectNodeContents(box);var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="Selected"}
+    try{navigator.clipboard.writeText(text).then(ok,sel)}catch(e){sel()}
+  });
+  box.appendChild(b);
+});
+(function(){
+  var root=document.documentElement,btn=document.getElementById("theme");
+  function cur(){var t=root.getAttribute("data-theme");if(t)return t;return matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}
+  try{var saved=localStorage.getItem("ron1n-theme");if(saved==="light"||saved==="dark")root.setAttribute("data-theme",saved)}catch(e){}
+  btn.addEventListener("click",function(){var n=cur()==="dark"?"light":"dark";root.setAttribute("data-theme",n);try{localStorage.setItem("ron1n-theme",n)}catch(e){}});
+})();
+show();
+</script>
+</body></html>
