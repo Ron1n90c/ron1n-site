@@ -9,3 +9,4 @@ Website for the Ronin GSE tank macros (Retail + WoW: Forever).
 Every push to `main` is built and deployed by Cloudflare Workers Builds.
 
 Last release: Ronin Retail V5.0.3, Ronin Forever V1.5.0.
+
