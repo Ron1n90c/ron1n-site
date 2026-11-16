@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="Ronin: tank macros for GSE. Retail and WoW: Forever.">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="Ronin: tank macros for GSE. Retail and WoW: Forever."><link rel="icon" type="image/png" href="assets/favicon.png"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png"><meta property="og:title" content="Ronin - tank macros for GSE"><meta property="og:description" content="One button. Retail and WoW: Forever tank macros for GSE."><meta property="og:image" content="https://ron1n.cc/assets/og.png"><meta name="theme-color" content="#0e0c18">
 <title>Ronin Macros</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -69,6 +69,21 @@ nav .wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-conten
 .kofi h2{margin:0}
 .kofi p{max-width:56ch;margin:0;color:var(--lede)}
 .kofi .url{font:500 14px/1.4 var(--f-mono);color:var(--mute);word-break:break-all}
+
+/* brand logo */
+.logo{display:inline-flex;align-items:center;gap:10px}
+.logo img{width:34px;height:34px;display:block}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(24px,5vw,64px);align-items:center}
+.hero-art{position:relative;width:clamp(200px,30vw,380px);aspect-ratio:1;display:grid;place-items:center}
+.hero-art::before{content:"";position:absolute;inset:-12%;border-radius:50%;background:radial-gradient(closest-side,var(--glow-a),transparent 72%);filter:blur(8px)}
+.hero-art img{position:relative;width:100%;height:auto;display:block;filter:drop-shadow(0 18px 40px rgba(60,40,160,.35));animation:bob 7s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@media(max-width:860px){.hero-grid{grid-template-columns:1fr}.hero-art{order:-1;width:132px;margin-bottom:6px}}
+@media(prefers-reduced-motion:reduce){.hero-art img{animation:none}}
+.sup-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.sup-urls{display:grid;gap:4px;justify-items:center}
+.flogo{display:inline-flex;align-items:center;gap:10px}
+.flogo img{width:30px;height:30px}
 
 /* hero */
 .hero{min-height:min(64vh,560px);display:flex;align-items:flex-end;padding-block:64px 40px}
@@ -156,7 +171,7 @@ footer p{margin:6px 0 0}
 
 <nav>
   <div class="wrap">
-    <a class="logo" href="#retail">RONIN<small>tank macros for GSE</small></a>
+    <a class="logo" href="#retail"><img src="assets/logo-256.png" alt="" width="34" height="34">RONIN<small>tank macros for GSE</small></a>
     <div class="switch" role="tablist" aria-label="Game version">
       <a href="#retail" id="t-retail" role="tab">Retail</a>
       <a href="#forever" id="t-forever" role="tab">Forever</a>
@@ -166,7 +181,8 @@ footer p{margin:6px 0 0}
 </nav>
 
 <header class="hero">
-  <div class="wrap">
+  <div class="wrap hero-grid">
+   <div>
     <span class="kanji">侍魂 · SAMURAI SPIRIT</span>
     <h1>One button.<br><em id="hero-em">Six tanks.</em></h1>
     <p id="hero-p">Tank macros for GSE, made by a player who wants to hold the pull, not juggle twenty keybinds. Pick your game version, import in one command, press one key.</p>
@@ -176,6 +192,8 @@ footer p{margin:6px 0 0}
     </div>
     <p class="upd" id="hero-upd"></p>
     <div class="stats" id="stats"></div>
+   </div>
+   <div class="hero-art"><img src="assets/logo.webp" alt="Ronin logo" width="640" height="640" fetchpriority="high"></div>
   </div>
 </header>
 
@@ -231,7 +249,7 @@ footer p{margin:6px 0 0}
     <div class="grid">
       <div class="card"><span class="role">Tank</span><h3>Protection Paladin</h3><p>Seal of Fury and Judgement as one castsequence, then Holy Strike, Exorcism, Consecration, Holy Shield, Hammer of the Righteous. You keep Righteous Fury.</p><ul><li>Leveling 1-20</li><li>Leveling 20-40</li><li>60</li></ul></div>
       <div class="card"><span class="role">Tank</span><h3>Protection Warrior</h3><p>Defensive Stance, Shield Slam, Revenge, Sunder Armor, Shield Block, and a shouts castsequence with Thunder Clap, Demoralizing Shout and Battle Shout.</p><ul><li>Leveling 1-20</li><li>Leveling 20-40</li><li>60</li></ul></div>
-      <div class="card"><span class="role">Tank</span><h3>Feral Druid (Bear)</h3><p>Every step makes sure you are in Bear Form first (Dire Bear Form from level 40), then Primal Bite, Lacerate, Swipe, Maul, Faerie Fire, Demoralizing Roar and Enrage.</p><ul><li>Leveling 1-20</li><li>Leveling 20-40</li><li>60</li></ul></div>
+      <div class="card"><span class="role">Tank</span><h3>Feral Druid (Bear)</h3><p>Every step makes sure you are in Bear Form first (Dire Bear Form from level 40), then Primal Bite, Lacerate, Swipe, Maul, Faerie Fire and Demoralizing Roar. Faerie Fire and Roar are re-applied on every new target and then on a timer.</p><ul><li>Leveling 1-20</li><li>Leveling 20-40</li><li>60</li></ul></div>
     </div>
   </div>
 
@@ -297,6 +315,7 @@ footer p{margin:6px 0 0}
       <tr><td><kbd>Shift</kbd></td><td>Heal</td><td>Flash of Light / Holy Light</td><td>Victory Rush</td><td>Frenzied Regeneration</td></tr>
       <tr><td><kbd>Alt</kbd></td><td>CC (stun)</td><td>Hammer of Justice</td><td>Concussion Blow</td><td>Bash</td></tr>
       <tr><td><kbd>Ctrl</kbd></td><td>Interrupt</td><td>Rebuke</td><td>Shield Bash</td><td>Feral Charge</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd></td><td>Taunt</td><td>·</td><td>·</td><td>Growl</td></tr>
     </tbody></table>
   </div>
   <p class="mute" style="font-size:14px;margin:12px 0 0" id="keys-note">Interrupts and the rest of your utility stay on your own keybinds in Retail.</p>
@@ -338,15 +357,18 @@ footer p{margin:6px 0 0}
   <span class="eyebrow">Support</span>
   <h2>☕ Like the macros?</h2>
   <p>If my sequences help you out and you’d like to support ongoing updates, you can buy me a coffee here:</p>
-  <a class="btn primary" href="https://ko-fi.com/ron1n90c" target="_blank" rel="noopener">❤️ Buy me a coffee on Ko-fi</a>
-  <span class="url">https://ko-fi.com/ron1n90c</span>
+  <div class="sup-btns">
+    <a class="btn primary" href="https://ko-fi.com/ron1n90c" target="_blank" rel="noopener">❤️ Buy me a coffee on Ko-fi</a>
+    <a class="btn" href="https://www.patreon.com/RON1N90C" target="_blank" rel="noopener">Support on Patreon</a>
+  </div>
+  <div class="sup-urls"><span class="url">https://ko-fi.com/ron1n90c</span><span class="url">https://www.patreon.com/RON1N90C</span></div>
 </div>
 
 </main>
 
 <footer><div class="wrap foot">
   <div>
-    <b class="flogo">RONIN</b>
+    <b class="flogo"><img src="assets/logo-256.png" alt="" width="30" height="30">RONIN</b>
     <p>Tank macros for GSE (Gnome Sequencer Enhanced). Made by a tank, for tanks who would rather play than click.</p>
   </div>
   <div class="legal">
@@ -358,14 +380,14 @@ footer p{margin:6px 0 0}
 <script>
 // Updated by the build script every time a new version is released.
 var DATA = {
-  retail:  { name:"Ronin Retail",  em:"Six tanks.", folder:"RoninInstaller", version:"V5.0.3", updated:"10 November 2026",
-    file:"RoninRetail_V5.0.3.zip", href:"downloads/RoninRetail.zip",
-    notes:["Blood DK: Death and Decay and Reaper’s Mark cast without the combat condition","README rewritten for the current version"],
+  retail:  { name:"Ronin Retail",  em:"Six tanks.", folder:"RoninInstaller", version:"V5.1.1", updated:"16 November 2026",
+    file:"RoninRetail_V5.1.1.zip", href:"downloads/RoninRetail.zip",
+    notes:["New look: Ronin logo welcome screen, animated glow, resizable installer and a thank-you panel","The installer now tells you if a spec is Up to date, has an Update available, or is not installed yet","Add-on icon in the AddOn list; also available on CurseForge"],
     p:"Tank macros for GSE, made by a player who wants to hold the pull, not juggle twenty keybinds. Six tank specs, twelve sequences, one key.",
     stats:[["6","tank specs"],["12","sequences"],["255","character limit respected"]] },
-  forever: { name:"Ronin Forever", em:"Classic rules.", folder:"RoninForever", version:"V1.5.1", updated:"13 November 2026",
-    file:"RoninForever_V1.5.1.zip", href:"downloads/RoninForever.zip",
-    notes:["Druid: Faerie Fire (Feral) is a talent, so it no longer appears in Leveling 1-20","Spells and modifier keys re-checked: no [buff]/[debuff] conditions anywhere, refreshes are timed castsequences","Plain spell names, no ranks; Druid makes sure you are in Bear Form on every step"],
+  forever: { name:"Ronin Forever", em:"Classic rules.", folder:"RoninForever", version:"V1.6.1", updated:"16 November 2026",
+    file:"RoninForever_V1.6.1.zip", href:"downloads/RoninForever.zip",
+    notes:["New look: Ronin logo welcome screen, glowing infinity, resizable installer, Up to date / Update available status","Druid: Enrage removed (it lowers armor), Ctrl+Alt = Growl, Faerie Fire and Roar re-apply on every new target","Druid uses Bear Form while leveling and Dire Bear Form in the 60 version; plain spell names, no IDs"],
     p:"The same one-key idea for WoW: Forever. Protection Paladin, Protection Warrior and Feral Druid, each with Leveling 1-20, Leveling 20-40 and 60 versions.",
     stats:[["3","tank classes"],["9","versions"],["3","modifier keys"]] }
 };
