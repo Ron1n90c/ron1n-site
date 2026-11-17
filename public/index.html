@@ -402,14 +402,14 @@ footer p{margin:6px 0 0}
 <script>
 // Updated by the build script every time a new version is released.
 var DATA = {
-  retail:  { name:"Ronin Retail",  em:"Six tanks.", folder:"Ronin", version:"V5.2.0", updated:"17 November 2026",
-    file:"Ronin_V2.0.0.zip", href:"downloads/Ronin.zip",
-    notes:["One add-on for both worlds: Ronin now ships Retail and Forever together (add-on V2.0.0)","Welcome screen with two buttons; Retail has its own violet W. Same Retail sequences as 5.1.x","Installer status works with the newest GSE: Up to date / Update available / Not installed"],
+  retail:  { name:"Ronin Retail",  em:"Six tanks.", folder:"Ronin", version:"V5.2.1", updated:"17 November 2026",
+    file:"Ronin_V2.0.1.zip", href:"downloads/Ronin.zip",
+    notes:["Fix: Vengeance Demon Hunter showed Incomplete in the installer (GSE cuts names to 28 characters). Annihilator sequence is now RoninDH_Vengeance_Annihil","Cleaner welcome screen and a new thank-you panel with your keys (Shift heal, Alt CC)","One add-on for both worlds: Ronin ships Retail and Forever together (add-on V2.0.1)","Welcome screen with two buttons; Retail has its own violet W. Same Retail sequences as 5.1.x","Installer status works with the newest GSE: Up to date / Update available / Not installed"],
     p:"Tank macros for GSE, made by a player who wants to hold the pull, not juggle twenty keybinds. Six tank specs, twelve sequences, one key.",
     stats:[["6","tank specs"],["12","sequences"],["255","character limit respected"]] },
   forever: { name:"Ronin Forever", em:"Classic rules.", folder:"Ronin", version:"V1.7.0", updated:"17 November 2026",
-    file:"Ronin_V2.0.0.zip", href:"downloads/Ronin.zip",
-    notes:["One add-on for both worlds: Forever now lives in the Ronin add-on (V2.0.0) with its own glowing infinity button","Druid: Enrage removed (it lowers armor); Faerie Fire and Roar re-apply on every new target","Druid uses Bear Form while leveling and Dire Bear Form in the 60 version. Modifiers unchanged: Shift heal, Alt CC, Ctrl interrupt"],
+    file:"Ronin_V2.0.1.zip", href:"downloads/Ronin.zip",
+    notes:["Cleaner welcome screen and a new thank-you panel with your keys (Shift heal, Alt CC, Ctrl interrupt)","One add-on for both worlds: Forever now lives in the Ronin add-on (V2.0.1) with its own glowing infinity button","Druid: Enrage removed (it lowers armor); Faerie Fire and Roar re-apply on every new target","Druid uses Bear Form while leveling and Dire Bear Form in the 60 version. Modifiers unchanged: Shift heal, Alt CC, Ctrl interrupt"],
     p:"The same one-key idea for WoW: Forever. Protection Paladin, Protection Warrior and Feral Druid, each with Leveling 1-20, Leveling 20-40 and 60 versions.",
     stats:[["3","tank classes"],["9","versions"],["3","modifier keys"]] }
 };
@@ -426,7 +426,7 @@ function show(){
   $("cta-name").textContent="Ronin"; $("dl-name").textContent="Ronin";
   $("keys-note").textContent = p==="retail" ? "Interrupts and the rest of your utility stay on your own keybinds in Retail." : "Big defensives stay on your own keybinds in Forever too.";
   $("stats").innerHTML = d.stats.map(function(s){return "<div><b>"+s[0]+"</b>"+s[1]+"</div>"}).join("");
-  $("dl-ver").textContent=d.version; $("dl-date").textContent="Updated "+d.updated+" · add-on V2.0.0";
+  $("dl-ver").textContent=d.version; $("dl-date").textContent="Updated "+d.updated+" · add-on V2.0.1";
   $("hero-upd").innerHTML="<b>"+d.version+"</b> · Updated "+d.updated;
   $("dl-new").innerHTML=d.notes.map(function(n){return "<li>"+n+"</li>"}).join("");
   var btn=$("dl-btn"); btn.href=d.href; btn.setAttribute("download",d.file); $("cta-get").href="#install";
