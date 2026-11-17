@@ -13,7 +13,7 @@
   --violet:#6d4ad8; --magenta:#c0398f;
   --retail:#0f9a6a; --forever:#b4741a; --on-accent:#ffffff;
   --accent:var(--retail); --accent-2:var(--violet);
-  --nav:rgba(245,243,250,.55); --glow-a:rgba(109,74,216,.13); --glow-b:rgba(15,154,106,.11);
+  --nav:rgba(245,243,250,.55); --glow-a:rgba(109,74,216,.13); --glow-b:rgba(15,154,106,.11); --gp:16%; --gph:30%;
   --f-head:"Chakra Petch","Segoe UI",system-ui,sans-serif;
   --f-body:"Inter","Segoe UI",system-ui,sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
@@ -24,14 +24,14 @@
   --panel:rgba(26,22,44,.55); --soft:rgba(255,255,255,.045); --soft-2:var(--soft);
   --line:rgba(190,170,255,.15); --code:#08070f; --code-fg:#d4ffdd;
   --violet:#9a7cf6; --magenta:#f06cc6; --retail:#62dc8c; --forever:#f0bb5c; --on-accent:#0e0c18;
-  --nav:rgba(14,12,24,.5); --glow-a:rgba(139,92,246,.2); --glow-b:rgba(98,220,140,.12);
+  --nav:rgba(14,12,24,.5); --glow-a:rgba(139,92,246,.2); --glow-b:rgba(98,220,140,.12); --gp:34%; --gph:56%;
   color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0e0c18; --fg:#ece9f6; --mute:#a9a4c2; --lede:#cfc9e6;
   --panel:rgba(26,22,44,.55); --soft:rgba(255,255,255,.045); --soft-2:var(--soft);
   --line:rgba(190,170,255,.15); --code:#08070f; --code-fg:#d4ffdd;
   --violet:#9a7cf6; --magenta:#f06cc6; --retail:#62dc8c; --forever:#f0bb5c; --on-accent:#0e0c18;
-  --nav:rgba(14,12,24,.5); --glow-a:rgba(139,92,246,.2); --glow-b:rgba(98,220,140,.12);
+  --nav:rgba(14,12,24,.5); --glow-a:rgba(139,92,246,.2); --glow-b:rgba(98,220,140,.12); --gp:34%; --gph:56%;
   color-scheme:dark}
 body{--accent:var(--retail)}
 body[data-product="forever"]{--accent:var(--forever);--accent-2:var(--magenta)}
@@ -172,6 +172,21 @@ footer p{margin:6px 0 0}
 .legal{font-size:12.5px}
 @media(max-width:820px){footer .foot{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* soft glowing borders (panels, cards, tables, code, FAQ) */
+.panel,.card,.tbl,.oneaddon,.dl,details,.code{
+  border-color:color-mix(in srgb,var(--accent) 36%,var(--line));
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 6%,transparent),
+             0 0 24px -6px color-mix(in srgb,var(--accent) var(--gp),transparent),
+             inset 0 0 32px -22px color-mix(in srgb,var(--accent) var(--gp),transparent);
+  transition:box-shadow .35s ease,border-color .35s ease}
+.panel:hover,.card:hover,.tbl:hover,.oneaddon:hover,.dl:hover,details:hover,.code:hover,details[open]{
+  border-color:color-mix(in srgb,var(--accent) 62%,var(--line));
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 12%,transparent),
+             0 0 34px -4px color-mix(in srgb,var(--accent) var(--gph),transparent),
+             inset 0 0 38px -20px color-mix(in srgb,var(--accent) var(--gph),transparent)}
+.panel .card,.panel .tbl,.panel details,.panel .code{box-shadow:0 0 18px -8px color-mix(in srgb,var(--accent) var(--gp),transparent)}
+@media(prefers-reduced-motion:reduce){.panel,.card,.tbl,.oneaddon,.dl,details,.code{transition:none}}
 </style>
 
 
