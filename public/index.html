@@ -83,6 +83,9 @@ nav .wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-conten
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 @media(max-width:860px){.hero-grid{grid-template-columns:1fr}.hero-art{order:-1;width:132px;margin-bottom:6px}}
 @media(prefers-reduced-motion:reduce){.hero-art img,.hero-art::before{animation:none}}
+.oneaddon{display:block;width:fit-content;max-width:100%;margin:6px 0 14px;padding:8px 16px;border:1px solid var(--line);border-radius:14px;background:var(--panel);font-size:14px;line-height:1.45;color:var(--mute)}
+.oneaddon b{color:var(--fg)}
+.code-inline{font-family:var(--f-mono);font-size:.9em;color:var(--fg)}
 .sup-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
 .sup-urls{display:grid;gap:4px;justify-items:center}
 .flogo{display:inline-flex;align-items:center;gap:10px}
@@ -189,6 +192,7 @@ footer p{margin:6px 0 0}
     <span class="kanji">侍魂 · SAMURAI SPIRIT</span>
     <h1>One button.<br><em id="hero-em">Six tanks.</em></h1>
     <p id="hero-p">Tank macros for GSE, made by a player who wants to hold the pull, not juggle twenty keybinds. Pick your game version, import in one command, press one key.</p>
+    <p class="oneaddon"><b>One add-on to rule both worlds.</b> Retail and Forever in a single download.</p>
     <div class="cta">
       <a class="btn primary" id="cta-get" href="#install">Get <span id="cta-name">Ronin Retail</span></a>
       <a class="btn" href="#how">See how it works</a>
@@ -318,7 +322,6 @@ footer p{margin:6px 0 0}
       <tr><td><kbd>Shift</kbd></td><td>Heal</td><td>Flash of Light / Holy Light</td><td>Victory Rush</td><td>Frenzied Regeneration</td></tr>
       <tr><td><kbd>Alt</kbd></td><td>CC (stun)</td><td>Hammer of Justice</td><td>Concussion Blow</td><td>Bash</td></tr>
       <tr><td><kbd>Ctrl</kbd></td><td>Interrupt</td><td>Rebuke</td><td>Shield Bash</td><td>Feral Charge</td></tr>
-      <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd></td><td>Taunt</td><td>·</td><td>·</td><td>Growl</td></tr>
     </tbody></table>
   </div>
   <p class="mute" style="font-size:14px;margin:12px 0 0" id="keys-note">Interrupts and the rest of your utility stay on your own keybinds in Retail.</p>
@@ -329,8 +332,8 @@ footer p{margin:6px 0 0}
   <h2>Three steps, one command.</h2>
   <div class="two">
     <ol class="steps">
-      <li><div><b>Copy the addon folder</b><br><span class="mute">Put <span id="folder">RoninInstaller</span> into your AddOns folder and make sure GSE is enabled.</span></div></li>
-      <li><div><b>Import</b><br><span class="mute">Log in, type the command, tick the classes you want and click Import Selected.</span></div></li>
+      <li><div><b>Copy the addon folder</b><br><span class="mute">Put the <b>Ronin</b> folder into your AddOns folder (it is the same folder for Retail and Forever) and make sure GSE is enabled. Delete the old <span class="code-inline">RoninInstaller</span> / <span class="code-inline">RoninForever</span> folders if you have them.</span></div></li>
+      <li><div><b>Import</b><br><span class="mute">Log in, type the command, choose <b>Retail</b> or <b>Forever</b> on the welcome screen, tick the classes you want and click Import Selected.</span></div></li>
       <li><div><b>Put the macro on your bar</b><br><span class="mute">Drag the GSE macro to your action bar and bind it. After every GSE update, place it on the bar again.</span></div></li>
     </ol>
     <div>
@@ -350,6 +353,7 @@ footer p{margin:6px 0 0}
   <span class="eyebrow">FAQ</span>
   <h2>Quick answers.</h2>
   <details><summary>Nothing casts after a GSE update.</summary><p>A GSE update unbinds the macro from the action bar. Drag it onto the bar again and bind it. The sequences themselves are not affected.</p></details>
+  <details><summary>Do I need two add-ons, one per game?</summary><p>No. Ronin is a single add-on for both worlds. It works in Retail and in WoW: Forever; on the welcome screen you choose which pack to import. The Retail and Forever changelogs stay separate on this page.</p></details>
   <details><summary>Does it play the game for me?</summary><p>No. It presses the next sensible spell on every key press. You still position, taunt, use cooldowns and call the pull.</p></details>
   <details><summary>My game isn’t in English.</summary><p>Spell names are translated and can become longer. Check the character counter in the GSE editor: every step has to stay under 255 characters.</p></details>
   <details><summary>Why are the big defensives missing?</summary><p>Because timing them is the tank’s job. A macro that burns Shield Wall on cooldown is worse than no macro.</p></details>
@@ -383,14 +387,14 @@ footer p{margin:6px 0 0}
 <script>
 // Updated by the build script every time a new version is released.
 var DATA = {
-  retail:  { name:"Ronin Retail",  em:"Six tanks.", folder:"RoninInstaller", version:"V5.1.1", updated:"16 November 2026",
-    file:"RoninRetail_V5.1.1.zip", href:"downloads/RoninRetail.zip",
-    notes:["New look: Ronin logo welcome screen, animated glow, resizable installer and a thank-you panel","The installer now tells you if a spec is Up to date, has an Update available, or is not installed yet","Add-on icon in the AddOn list; also available on CurseForge"],
+  retail:  { name:"Ronin Retail",  em:"Six tanks.", folder:"Ronin", version:"V5.2.0", updated:"17 November 2026",
+    file:"Ronin_V2.0.0.zip", href:"downloads/Ronin.zip",
+    notes:["One add-on for both worlds: Ronin now ships Retail and Forever together (add-on V2.0.0)","Welcome screen with two buttons; Retail has its own violet W. Same Retail sequences as 5.1.x","Installer status works with the newest GSE: Up to date / Update available / Not installed"],
     p:"Tank macros for GSE, made by a player who wants to hold the pull, not juggle twenty keybinds. Six tank specs, twelve sequences, one key.",
     stats:[["6","tank specs"],["12","sequences"],["255","character limit respected"]] },
-  forever: { name:"Ronin Forever", em:"Classic rules.", folder:"RoninForever", version:"V1.6.1", updated:"16 November 2026",
-    file:"RoninForever_V1.6.1.zip", href:"downloads/RoninForever.zip",
-    notes:["New look: Ronin logo welcome screen, glowing infinity, resizable installer, Up to date / Update available status","Druid: Enrage removed (it lowers armor), Ctrl+Alt = Growl, Faerie Fire and Roar re-apply on every new target","Druid uses Bear Form while leveling and Dire Bear Form in the 60 version; plain spell names, no IDs"],
+  forever: { name:"Ronin Forever", em:"Classic rules.", folder:"Ronin", version:"V1.7.0", updated:"17 November 2026",
+    file:"Ronin_V2.0.0.zip", href:"downloads/Ronin.zip",
+    notes:["One add-on for both worlds: Forever now lives in the Ronin add-on (V2.0.0) with its own glowing infinity button","Druid: Enrage removed (it lowers armor); Faerie Fire and Roar re-apply on every new target","Druid uses Bear Form while leveling and Dire Bear Form in the 60 version. Modifiers unchanged: Shift heal, Alt CC, Ctrl interrupt"],
     p:"The same one-key idea for WoW: Forever. Protection Paladin, Protection Warrior and Feral Druid, each with Leveling 1-20, Leveling 20-40 and 60 versions.",
     stats:[["3","tank classes"],["9","versions"],["3","modifier keys"]] }
 };
@@ -404,10 +408,10 @@ function show(){
   $("keys-retail").hidden = p!=="retail"; $("keys-forever").hidden = p!=="forever";
   $("t-retail").setAttribute("aria-current", p==="retail"); $("t-forever").setAttribute("aria-current", p==="forever");
   $("hero-em").textContent=d.em; $("hero-p").textContent=d.p;
-  $("cta-name").textContent=d.name; $("dl-name").textContent=d.name; $("folder").textContent=d.folder;
+  $("cta-name").textContent="Ronin"; $("dl-name").textContent="Ronin";
   $("keys-note").textContent = p==="retail" ? "Interrupts and the rest of your utility stay on your own keybinds in Retail." : "Big defensives stay on your own keybinds in Forever too.";
   $("stats").innerHTML = d.stats.map(function(s){return "<div><b>"+s[0]+"</b>"+s[1]+"</div>"}).join("");
-  $("dl-ver").textContent=d.version; $("dl-date").textContent="Updated "+d.updated;
+  $("dl-ver").textContent=d.version; $("dl-date").textContent="Updated "+d.updated+" · add-on V2.0.0";
   $("hero-upd").innerHTML="<b>"+d.version+"</b> · Updated "+d.updated;
   $("dl-new").innerHTML=d.notes.map(function(n){return "<li>"+n+"</li>"}).join("");
   var btn=$("dl-btn"); btn.href=d.href; btn.setAttribute("download",d.file); $("cta-get").href="#install";
