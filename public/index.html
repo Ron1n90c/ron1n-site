@@ -444,12 +444,12 @@ footer p{margin:6px 0 0}
 // Updated by the build script every time a new version is released.
 var DATA = {
   retail:  { name:"Ronin Retail",  em:"Tank + DPS.", folder:"Ronin", version:"V6.0.0", updated:"22 November 2026",
-    file:"Ronin_V3.0.2.zip", href:"downloads/Ronin.zip",
+    file:"Ronin_V3.0.3.zip", href:"downloads/Ronin.zip",
     notes:["New name: Ronin - GSE SUITE. Tank and DPS in one add-on","32 DPS sequences: Unholy and Frost DK, Havoc DH, Retribution, Fury, Arms, Windwalker, Feral and Balance. One single-target and one AoE macro per hero tree","New Leveling version in every macro (tank and DPS) for the way to level 90: pick it by hand in GSE","Verified against Midnight 12.1.5; /startattack removed everywhere","Same keys: Shift heal, Alt crowd control. Discord: discord.gg/Trf4vkzbq"],
     p:"Ronin - GSE SUITE. Tank and DPS macros for GSE, made by a tank for every player. Six tank specs, nine DPS specs, a Leveling version in every macro, one key.",
     stats:[["6","tank specs"],["9","DPS specs"],["44","sequences"],["5","versions each"]] },
   forever: { name:"Ronin Forever", em:"Classic rules.", folder:"Ronin", version:"V3.0.0", updated:"22 November 2026",
-    file:"Ronin_V3.0.2.zip", href:"downloads/Ronin.zip",
+    file:"Ronin_V3.0.3.zip", href:"downloads/Ronin.zip",
     notes:["Tank and DPS: Protection Paladin, Protection Warrior, Feral Bear, Retribution, Arms, Fury, Feral Cat, Enhancement and Elemental Shaman","New level ranges: 1-10, 10-40 and 40-60","Keys: Shift heal, Ctrl interrupt (Paladin Hammer of Justice), Alt class extra (Consecration, Concussion Blow, Bash, totems)","Protection Paladin: Exorcism removed. Warriors: Rend added to Protection and Arms","Spell IDs and Priority mode, like Retail. Discord: discord.gg/Trf4vkzbq"],
     p:"The same one-key idea for WoW: Forever. Tank and DPS for Paladin, Warrior, Druid and Shaman, each with Level 1-10, 10-40 and 40-60 versions.",
     stats:[["9","specs"],["27","versions"],["3","modifier keys"]] }
@@ -467,7 +467,7 @@ function show(){
   $("cta-name").textContent="Ronin"; $("dl-name").textContent="Ronin";
   $("keys-note").textContent = p==="retail" ? "Interrupts and the rest of your utility stay on your own keybinds in Retail. DPS macros use the same Shift and Alt." : "Big defensives stay on your own keybinds in Forever too.";
   $("stats").innerHTML = d.stats.map(function(s){return "<div><b>"+s[0]+"</b>"+s[1]+"</div>"}).join("");
-  $("dl-ver").textContent=d.version; $("dl-date").textContent="Updated "+d.updated+" · add-on V3.0.2";
+  $("dl-ver").textContent=d.version; $("dl-date").textContent="Updated "+d.updated+" · add-on V3.0.3";
   $("hero-upd").innerHTML="<b>"+d.version+"</b> · Updated "+d.updated;
   $("dl-new").innerHTML=d.notes.map(function(n){return "<li>"+n+"</li>"}).join("");
   var btn=$("dl-btn"); btn.href=d.href; btn.setAttribute("download",d.file); $("cta-get").href="#install";
