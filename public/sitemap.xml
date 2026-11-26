@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://ron1n.cc/</loc><lastmod>2026-11-26</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://ron1n.cc/class/death-knight.html</loc><lastmod>2026-11-26</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ron1n.cc/class/demon-hunter.html</loc><lastmod>2026-11-26</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ron1n.cc/class/druid.html</loc><lastmod>2026-11-26</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ron1n.cc/class/hunter.html</loc><lastmod>2026-11-26</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ron1n.cc/class/mage.html</loc><lastmod>2026-11-26</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ron1n.cc/class/monk.html</loc><lastmod>2026-11-26</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ron1n.cc/class/paladin.html</loc><lastmod>2026-11-26</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ron1n.cc/class/priest.html</loc><lastmod>2026-11-26</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ron1n.cc/class/shaman.html</loc><lastmod>2026-11-26</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ron1n.cc/class/warlock.html</loc><lastmod>2026-11-26</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ron1n.cc/class/warrior.html</loc><lastmod>2026-11-26</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
 </urlset>
