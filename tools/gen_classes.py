@@ -5,7 +5,7 @@ Run from the repo root: python3 tools/gen_classes.py
 - adds the class tiles to the Classes section of index.html
 - writes public/class/<slug>.html and updates public/sitemap.xml
 Emblems are original Ronin drawings (SVG) in the official class colours."""
-import re, os, datetime
+import json, re, os, datetime
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PUB = os.path.join(ROOT, 'public')
@@ -107,6 +107,7 @@ def drawer(prefix):
     gen = [('Home', '#top'), ('What you get', '#what'), ('Always up to date', '#uptodate'), ('Classes', '#specs'),
            ('Keys', '#keys'), ('How to start', '#start'), ('Questions', '#faq'), ('Feedback', '#join')]
     g = ''.join(f'<a class="it" href="{prefix}{h}">{n}</a>' for n, h in gen)
+    g += '<a class="it" href="/tested.html">Tested: every macro</a>'
     cl = ''.join(f'<a class="it" href="/class/{c[0]}.html">{emblem(c[0], c[2], 30)}{c[1]}<small>{role_count(c)}</small></a>' for c in CLASSES)
     return ('<!--MENU-->\n<div class="drawer-bg" id="drawerBg"></div>\n'
             '<aside class="drawer" id="drawer" aria-hidden="true" aria-label="Menu">'
@@ -198,6 +199,110 @@ def class_page(c, style, theme_js):
 </body></html>
 '''
 
+# ---------- public test page: SIM numbers only (tools/tested.json is written by the build) ----------
+VORDER = ['Mythic', 'Raid', 'Delve', 'Beginner', 'Leveling', 'Level 1-10', 'Level 10-40', 'Level 40-60']
+TESTED_CSS = """<style>
+.tstat{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:18px 0}
+.tstat div{background:var(--panel,rgba(255,255,255,.04));border:1px solid var(--line,rgba(255,255,255,.12));border-radius:12px;padding:14px}
+.tstat b{display:block;font:700 26px 'Chakra Petch',sans-serif}
+.tstat span{font-size:13px;opacity:.75}
+details.tcls{border:1px solid var(--line,rgba(255,255,255,.12));border-radius:12px;margin:10px 0;padding:0 14px}
+details.tcls summary{cursor:pointer;padding:12px 0;display:flex;align-items:center;gap:10px;font-weight:600}
+details.tcls summary small{margin-left:auto;opacity:.75;font-weight:500}
+.tscroll{overflow-x:auto;margin-bottom:12px}
+table.tt{border-collapse:collapse;width:100%;font-size:13px;min-width:560px}
+table.tt th,table.tt td{padding:6px 8px;border-top:1px solid var(--line,rgba(255,255,255,.1));text-align:left;white-space:nowrap}
+table.tt td.n{font-variant-numeric:tabular-nums}
+.g{color:#3fb27f}.y{color:#d9a23a}.r{color:#e0605a}
+.tnote{font-size:13px;opacity:.8}
+</style>"""
+
+def _pc(x):
+    a, b = x
+    c = 'g' if min(a, b) >= 90 else ('y' if min(a, b) >= 80 else 'r')
+    return f'<td class="n {c}">{a}% · {b}%</td>'
+
+def tested_page(t, style, theme_js):
+    rows = t['rows']
+    nver = sum(len(r['v']) for r in rows)
+    ok = sum(1 for r in rows for x in r['v'].values() if min(x) >= 90)
+    avg = round(sum(sum(x) / 2 for r in rows for x in r['v'].values()) / nver, 1)
+    tk = t['tank']
+    tavg = round(sum(v[0] for v in tk.values()) / max(1, len(tk)), 1)
+    blocks = ''
+    for slug, name, colour, *_ in CLASSES:
+        rs = sorted([r for r in rows if r['c'] == name], key=lambda r: (r['w'] != 'Retail', ['Tank', 'DPS', 'Heal'].index(r['r']), r['n']))
+        if not rs:
+            continue
+        body = ''
+        for w in ('Retail', 'Forever'):
+            ws = [r for r in rs if r['w'] == w]
+            if not ws:
+                continue
+            vs = [v for v in VORDER if any(v in r['v'] for r in ws)]
+            head = ''.join(f'<th>{v}</th>' for v in vs)
+            tr = ''
+            for r in ws:
+                nm = r['n'].replace('Ronin', '', 1).strip('_')
+                cells = ''.join(_pc(r['v'][v]) if v in r['v'] else '<td>-</td>' for v in vs)
+                tr += f'<tr><td>{nm}</td><td>{r["r"]}</td>{cells}</tr>'
+            body += (f'<h4>{"Retail (Midnight)" if w == "Retail" else "WoW: Forever"}</h4><div class="tscroll"><table class="tt">'
+                     f'<tr><th>Sequence</th><th>Role</th>{head}</tr>{tr}</table></div>')
+        cok = sum(1 for r in rs for x in r['v'].values() if min(x) >= 90)
+        cn = sum(len(r['v']) for r in rs)
+        blocks += (f'<details class="tcls"><summary>{emblem(slug, colour, 30)}{name}<small>{len(rs)} sequences · {cok}/{cn} versions at 90%+</small></summary>{body}</details>')
+    trow = ''
+    for k in sorted(tk):
+        n, v = k.split('|')
+        trow += f'<tr><td>{n.replace("Ronin", "", 1).strip("_")}</td><td>{v}</td><td class="n">{tk[k][0]}%</td><td class="n">{tk[k][1]}%</td></tr>'
+    desc = f'Every Ronin GSE macro tested: {len(rows)} sequences, {nver} versions, GCD use per version. Version {t["addon"]}.'
+    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Tested: every Ronin macro · Ronin</title>
+<meta name="description" content="{desc}">
+<link rel="canonical" href="https://ron1n.cc/tested.html">
+<link rel="icon" type="image/png" href="/assets/favicon.png"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<meta property="og:title" content="Tested: every Ronin macro"><meta property="og:description" content="{desc}"><meta property="og:type" content="website">
+<meta property="og:url" content="https://ron1n.cc/tested.html"><meta property="og:image" content="https://ron1n.cc/assets/og.png"><meta name="theme-color" content="#0e0c18">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Inter:wght@400;500;600&display=swap">
+{style}
+{TESTED_CSS}
+</head>
+<body>
+<nav><div class="wrap">
+  <a class="logo" href="/"><img src="/assets/logo-256.png" alt="" width="34" height="34">RONIN<small>GSE SUITE</small></a>
+  <div class="links"><a href="/#what">What you get</a><a href="/#specs">Classes</a><a href="/#keys">Keys</a><a href="/#start">Start</a></div>
+  <button class="theme" id="theme" type="button" aria-label="Switch light / dark">◐</button><button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">☰</button>
+</div></nav>
+<main class="wrap" id="top">
+  <div class="crumb"><a href="/">Ronin</a> › Tested</div>
+  <h1>Tested: every macro</h1>
+  <p>Before every release each Ronin sequence is run in a simulation, every version on its own. The number is how much of
+  the global cooldown the macro keeps busy when you press the key 8 times per second and 4 times per second.
+  90% or more is our bar. Version {t["addon"]} (Retail pack {t["ret"]}, Forever pack {t["fore"]}), tested {t["date"]}.</p>
+  <div class="tstat"><div><b>{len(rows)}</b><span>sequences</span></div><div><b>{nver}</b><span>versions tested</span></div>
+  <div><b>{ok}</b><span>versions at 90%+</span></div><div><b>{avg}%</b><span>average GCD use</span></div>
+  <div><b>{t["strings"]}</b><span>talent strings checked</span></div></div>
+  <section><h2>By class</h2><p class="tnote">Green 90%+ · yellow 80-89% · red below 80%. First number: 8 presses per second, second: 4.
+  Low levels in WoW: Forever have few spells, so a few 1-10 versions sit lower.</p>{blocks}</section>
+  <section><h2>Tanks, tested with cooldowns</h2><p class="tnote">The tank test also tracks cooldowns, charges and resources.
+  "Dead presses" are presses where nothing could be cast. Average of 4 to 7 presses per second.</p>
+  <details class="tcls"><summary>All tank versions<small>average GCD use {tavg}%</small></summary><div class="tscroll"><table class="tt">
+  <tr><th>Sequence</th><th>Version</th><th>GCD use</th><th>Dead presses</th></tr>{trow}</table></div></details></section>
+  <section class="join"><div class="panel">
+    <h2>Get Ronin</h2>
+    <p class="ver">Install GSE and Ronin, type <kbd>/ronin</kbd>. In game, <kbd>/ronin check</kbd> tells you if your talents fit your macro.</p>
+    <div class="cta"><a class="btn primary" href="/downloads/Ronin.zip" download>⬇ Download Ronin</a>
+    <a class="btn" href="https://www.curseforge.com/wow/addons/ronin" target="_blank" rel="noopener">CurseForge</a></div>
+  </div></section>
+</main>
+<footer><div class="wrap">Ronin - GSE SUITE · <a href="/">ron1n.cc</a> · Made by Ron1n</div></footer>
+{drawer('/')}
+{theme_js}
+{MENU_JS}
+</body></html>
+'''
+
 def main():
     s = patch_index()
     style = re.search(r'<style>.*?</style>', s, re.S).group(0)
@@ -207,6 +312,10 @@ def main():
     for c in CLASSES:
         open(os.path.join(PUB, 'class', c[0] + '.html'), 'w', encoding='utf-8').write(class_page(c, style, theme_js))
     urls = ['https://ron1n.cc/'] + [f'https://ron1n.cc/class/{c[0]}.html' for c in CLASSES]
+    tj = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tested.json')
+    if os.path.exists(tj):
+        open(os.path.join(PUB, 'tested.html'), 'w', encoding='utf-8').write(tested_page(json.load(open(tj)), style, theme_js))
+        urls.append('https://ron1n.cc/tested.html')
     sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     for u in urls:
         pr = '1.0' if u.endswith('/') else '0.8'
